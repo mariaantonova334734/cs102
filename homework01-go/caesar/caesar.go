@@ -18,15 +18,15 @@ Encrypts plaintext using a Caesar cipher.
 	for i in plaintext:
 		if i.isalpha():
 			if i.isupper():
-				if ord(i)+shift%26 > 90: 
-					ciphertext += chr(ord(i)+shift%26-26)
+				if ord(i) + shift % 26 > 90:
+					ciphertext += chr(ord(i) + shift % 26 - 26)
 				else:
-					ciphertext += chr(ord(i)+shift%26)
+					ciphertext += chr(ord(i) + shift % 26)
 			elif i.islower():
-				if ord(i)+shift%26 > 122:
-					ciphertext += chr(ord(i)+shift%26-26)
+				if ord(i) + shift % 26 > 122:
+					ciphertext += chr(ord(i) + shift % 26 - 26)
 				else:
-					ciphertext += chr(ord(i)+shift%26) 
+					ciphertext += chr(ord(i) + shift % 26)
 		else:
 			ciphertext += i
 
