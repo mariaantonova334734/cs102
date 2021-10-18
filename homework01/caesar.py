@@ -23,7 +23,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
                 else:
                     ciphertext += chr(ord(i) + shift % 26)
             elif i.islower():
-               if ord(i) + shift % 26 > 122:
+                if ord(i) + shift % 26 > 122:
                     ciphertext += chr(ord(i) + shift % 26 - 26)
                 else:
                     ciphertext += chr(ord(i) + shift % 26)               
