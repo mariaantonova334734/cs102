@@ -17,12 +17,12 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     while len(key) < len(plaintext):
         key += keyword
 
-    for i in range(0,len(plaintext)):
+    for i in range(0, len(plaintext)):
         if key[i].isupper():
-            shift = ord(key[i])-65
+            shift = ord(key[i]) - 65
         else:
-            shift = ord(key[i])-97
-        
+            shift = ord(key[i]) - 97
+
         ciphertext += encrypt_caesar(plaintext[i], shift)
     return ciphertext
 
@@ -43,10 +43,10 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     while len(key) < len(ciphertext):
         key += keyword
 
-    for i in range(0,len(ciphertext)):
+    for i in range(0, len(ciphertext)):
         if key[i].isupper():
-            shift = ord(key[i])-65
+            shift = ord(key[i]) - 65
         else:
-            shift = ord(key[i])-97
-        plaintext += decrypt_caesar(ciphertext[i],shift)
+            shift = ord(key[i]) - 97
+        plaintext += decrypt_caesar(ciphertext[i], shift)
     return plaintext
