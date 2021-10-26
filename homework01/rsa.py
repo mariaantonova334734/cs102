@@ -28,7 +28,7 @@ def is_prime(n: int) -> bool:
     
 
 
-def gcd(a: int, b: int) -> int:
+def gcd(aa: int, b: int) -> int:
     """
     Euclid's algorithm for determining the greatest common divisor.
 
@@ -37,12 +37,12 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    while a != 0 and b != 0:
-        if a > b:
-            a = a % b
+    while aa != 0 and b != 0:
+        if aa > b:
+            aa = aa % b
         else:
-            b = b % a
-    c = a + b
+            b = b % aa
+    c = aa + b
     return c
 
 
