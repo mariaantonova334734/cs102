@@ -5,7 +5,6 @@ import typing as tp
 def is_prime(n: int) -> bool:
     """
     Tests to see if a number is prime.
-
     >>> is_prime(2)
     True
     >>> is_prime(11)
@@ -13,17 +12,15 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    if n == 1:
+
+    if n <= 1:
         return False
-    k = 0
-    for i in range(2, n // 2 + 1):
+
+    for i in range(2, int(n ** 0.5) + 1):
         if n % i == 0:
-            k = k + 1
-    if k <= 0:
-        return True
-    else:
-        return False
-    # PUT YOUR CODE HERE
+            return False
+
+    return True
 
 
 def gcd(a: int, b: int) -> int:
@@ -37,9 +34,9 @@ def gcd(a: int, b: int) -> int:
     """
     while a != 0 and b != 0:
         if a > b:
-            a = a % b
+            a %= b
         else:
-            b = b % a
+            b %= a
     c = a + b
     return c
 
@@ -52,7 +49,7 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    phi1 = phi
+    phi1 = phi  # phi1 - premennaya vspomogatelnaya
     x, xx, y, yy = 1, 0, 0, 1
     while phi:
         q = e // phi
@@ -69,12 +66,9 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
         raise ValueError("p and q cannot be equal")
 
     n = p * q
-    # PUT YOUR CODE HERE
 
     phi = (p - 1) * (q - 1)
-    # PUT YOUR CODE HERE
 
-    # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)
 
     # Use Euclid's Algorithm to verify that e and phi(n) are coprime
