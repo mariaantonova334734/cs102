@@ -19,14 +19,17 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
         if i.isalpha():
             if i.isupper():
                 if ord(i) + shift % (ord("Z") - ord("A") + 1) > ord("Z"):
-                    ciphertext += chr(ord(i) + shift % (ord("Z") - ord("A") + 1) - (ord("Z") - ord("A") + 1))
-                        
+                    ciphertext += chr(
+                        ord(i) + shift % (ord("Z") - ord("A") + 1) - (ord("Z") - ord("A") + 1)
+                    )
+
                 else:
                     ciphertext += chr(ord(i) + shift % (ord("Z") - ord("A") + 1))
             elif i.islower():
                 if ord(i) + shift % (ord("z") - ord("a") + 1) > ord("z"):
                     ciphertext += chr(
-                        ord(i) + shift % (ord("z") - ord("a") + 1) - (ord("Z") - ord("A") + 1))
+                        ord(i) + shift % (ord("z") - ord("a") + 1) - (ord("Z") - ord("A") + 1)
+                    )
                 else:
                     ciphertext += chr(ord(i) + shift % (ord("z") - ord("a") + 1))
         else:
@@ -53,14 +56,18 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
         if i.isalpha():
             if i.isupper():
                 if ord(i) - shift % (ord("Z") - ord("A") + 1) < ord("A"):
-                    plaintext += chr(ord(i) - shift % (ord("Z") - ord("A") + 1) + (ord("Z") - ord("A") + 1))
-        
+                    plaintext += chr(
+                        ord(i) - shift % (ord("Z") - ord("A") + 1) + (ord("Z") - ord("A") + 1)
+                    )
+
                 else:
                     plaintext += chr(ord(i) - shift % (ord("Z") - ord("A") + 1))
             elif i.islower():
                 if ord(i) - shift % (ord("z") - ord("a") + 1) < ord("a"):
-                    plaintext += chr(ord(i) - shift % (ord("z") - ord("a") + 1) + (ord("z") - ord("a") + 1))
-                        
+                    plaintext += chr(
+                        ord(i) - shift % (ord("z") - ord("a") + 1) + (ord("z") - ord("a") + 1)
+                    )
+
                 else:
                     plaintext += chr(ord(i) - shift % (ord("z") - ord("a") + 1))
         else:
