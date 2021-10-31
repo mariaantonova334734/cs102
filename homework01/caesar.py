@@ -18,15 +18,17 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     for i in plaintext:
         if i.isalpha():
             if i.isupper():
-                if ord(i) + shift % 26 > 90:
-                    ciphertext += chr(ord(i) + shift % 26 - 26)
+                if ord(i) + shift % (ord("Z") - ord("A") + 1) > ord("Z"):
+                    ciphertext += chr(ord(i) + shift % (ord("Z") - ord("A") + 1) - (ord("Z") - ord("A") + 1))
+                        
                 else:
-                    ciphertext += chr(ord(i) + shift % 26)
+                    ciphertext += chr(ord(i) + shift % (ord("Z") - ord("A") + 1))
             elif i.islower():
-                if ord(i) + shift % 26 > 122:
-                    ciphertext += chr(ord(i) + shift % 26 - 26)
+                if ord(i) + shift % (ord("z") - ord("a") + 1) > ord("z"):
+                    ciphertext += chr(
+                        ord(i) + shift % (ord("z") - ord("a") + 1) - (ord("Z") - ord("A") + 1))
                 else:
-                    ciphertext += chr(ord(i) + shift % 26)
+                    ciphertext += chr(ord(i) + shift % (ord("z") - ord("a") + 1))
         else:
             ciphertext += i
 
@@ -50,15 +52,17 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     for i in ciphertext:
         if i.isalpha():
             if i.isupper():
-                if ord(i) - shift % 26 < 65:
-                    plaintext += chr(ord(i) - shift % 26 + 26)
+                if ord(i) - shift % (ord("Z") - ord("A") + 1) < ord("A"):
+                    plaintext += chr(ord(i) - shift % (ord("Z") - ord("A") + 1) + (ord("Z") - ord("A") + 1))
+        
                 else:
-                    plaintext += chr(ord(i) - shift % 26)
+                    plaintext += chr(ord(i) - shift % (ord("Z") - ord("A") + 1))
             elif i.islower():
-                if ord(i) - shift % 26 < 97:
-                    plaintext += chr(ord(i) - shift % 26 + 26)
+                if ord(i) - shift % (ord("z") - ord("a") + 1) < ord("a"):
+                    plaintext += chr(ord(i) - shift % (ord("z") - ord("a") + 1) + (ord("z") - ord("a") + 1))
+                        
                 else:
-                    plaintext += chr(ord(i) - shift % 26)
+                    plaintext += chr(ord(i) - shift % (ord("z") - ord("a") + 1))
         else:
             plaintext += i
     return plaintext
@@ -69,5 +73,5 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     Brute force breaking a Caesar cipher.
     """
     best_shift = 0
-    # PUT YOUR CODE HERE
+
     return best_shift
