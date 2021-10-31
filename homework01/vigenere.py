@@ -23,13 +23,21 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
         if plaintext[i].isalpha():
             if plaintext[i].isupper():
                 if ord(plaintext[i]) + shift % (ord("Z") - ord("A") + 1) > ord("Z"):
-                    ciphertext += chr(ord(plaintext[i])+ shift % (ord("Z") - ord("A") + 1)- (ord("Z") - ord("A") + 1))
+                    ciphertext += chr(
+                        ord(plaintext[i])
+                        + shift % (ord("Z") - ord("A") + 1)
+                        - (ord("Z") - ord("A") + 1)
+                    )
                 else:
                     ciphertext += chr(ord(plaintext[i]) + shift % (ord("Z") - ord("A") + 1))
             elif plaintext[i].islower():
                 if ord(plaintext[i]) + shift % (ord("z") - ord("a") + 1) > ord("z"):
-                    ciphertext += chr(ord(plaintext[i])+ shift % (ord("z") - ord("a") + 1)- (ord("Z") - ord("A") + 1))
-                        
+                    ciphertext += chr(
+                        ord(plaintext[i])
+                        + shift % (ord("z") - ord("a") + 1)
+                        - (ord("Z") - ord("A") + 1)
+                    )
+
                 else:
                     ciphertext += chr(ord(plaintext[i]) + shift % (ord("z") - ord("a") + 1))
         else:
@@ -63,14 +71,22 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         if ciphertext[i].isalpha():
             if ciphertext[i].isupper():
                 if ord(ciphertext[i]) - shift % (ord("Z") - ord("A") + 1) < ord("A"):
-                    plaintext += chr(ord(ciphertext[i])- shift % (ord("Z") - ord("A") + 1)+ (ord("Z") - ord("A") + 1))
-                        
+                    plaintext += chr(
+                        ord(ciphertext[i])
+                        - shift % (ord("Z") - ord("A") + 1)
+                        + (ord("Z") - ord("A") + 1)
+                    )
+
                 else:
                     plaintext += chr(ord(ciphertext[i]) - shift % (ord("Z") - ord("A") + 1))
             elif ciphertext[i].islower():
                 if ord(ciphertext[i]) - shift % (ord("z") - ord("a") + 1) < ord("a"):
-                    plaintext += chr( ord(ciphertext[i])- shift % (ord("z") - ord("a") + 1)+ (ord("z") - ord("a") + 1))
-                        
+                    plaintext += chr(
+                        ord(ciphertext[i])
+                        - shift % (ord("z") - ord("a") + 1)
+                        + (ord("z") - ord("a") + 1)
+                    )
+
                 else:
                     plaintext += chr(ord(ciphertext[i]) - shift % (ord("z") - ord("a") + 1))
         else:
