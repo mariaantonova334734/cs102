@@ -1,14 +1,13 @@
 import pathlib
-import random
 import typing as tp
-
+import random
 T = tp.TypeVar("T")
 
 
 def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
     """ Прочитать Судоку из указанного файла """
     path = pathlib.Path(path)
-    with path.open() as f:
+    with path.open(encoding='utf-8') as f:
         puzzle = f.read()
     return create_grid(puzzle)
 
@@ -138,10 +137,11 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     list1 = get_row(grid, pos)
     list2 = get_col(grid, pos)
     list3 = get_block(grid, pos)
+
     answer = []
     for i in range(1,10):
-        if i not in list1 and i not in list2 and i not in list3:
-            answer.append(i)  
+        if str(i) not in list1 and str(i) not in list2 and str(i) not in list3:           
+            answer.append(str(i))  
 
     return set(answer)
 
@@ -159,15 +159,17 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
+   
     x, y = find_empty_positions(grid)
     if x == None and y == None:
-        return True
+        return grid
     a = find_possible_values(grid, (x, y))
     for i in a:
         grid[x][y] = i
-        if solve(grid) == True:
-            return True
-        grid[x][y] = '.'
+        answer = solve(grid)
+        if answer != False:
+            return answer
+    grid[x][y] = '.'
     return False
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
@@ -221,13 +223,16 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
             grid[row][column] = "."
             i += 1       
     return grid
+    
+    
 
 
 if __name__ == "__main__":
-    for fname in ["puzzle1.txt","puzzle2.txt", "puzzle3.txt"]:
+    for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
         grid = read_sudoku(fname)
-        display(grid)
+
         solution = solve(grid)
+        
         if not solution:
             print(f"Puzzle {fname} can't be solved")
         else:
