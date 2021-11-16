@@ -1,13 +1,14 @@
 import pathlib
-import typing as tp
 import random
+import typing as tp
+
 T = tp.TypeVar("T")
 
 
 def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
     """ Прочитать Судоку из указанного файла """
     path = pathlib.Path(path)
-    with path.open(encoding='utf-8') as f:
+    with path.open(encoding="utf-8") as f:
         puzzle = f.read()
     return create_grid(puzzle)
 
@@ -16,7 +17,6 @@ def create_grid(puzzle: str) -> tp.List[tp.List[str]]:
     digits = [c for c in puzzle if c in "123456789."]
     grid = group(digits, 9)
     return grid
-
 
 
 def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
@@ -41,6 +41,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
             list2 = []
     return list1
 
+
 def display(grid: tp.List[tp.List[str]]) -> None:
     """Вывод Судоку """
     width = 2
@@ -54,9 +55,6 @@ def display(grid: tp.List[tp.List[str]]) -> None:
         if str(row) in "25":
             print(line)
     print()
-
-
-
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -102,10 +100,10 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
     list1 = []
-    X, Y = 3 *(pos[0]//3), 3 *(pos[1]//3)
-    for x in range(X, X+3):
-        for y in range(Y, Y+3):
-            list1.append(grid[x][y])    
+    X, Y = 3 * (pos[0] // 3), 3 * (pos[1] // 3)
+    for x in range(X, X + 3):
+        for y in range(Y, Y + 3):
+            list1.append(grid[x][y])
     return list1
 
 
@@ -121,7 +119,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     """
     for i in range(len(grid)):
         for j in range(len(grid[i])):
-            if grid[i][j] == '.':
+            if grid[i][j] == ".":
                 return (i, j)
     return (None, None)
 
@@ -142,12 +140,11 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     list3 = get_block(grid, pos)
 
     answer = []
-    for i in range(1,10):
-        if str(i) not in list1 and str(i) not in list2 and str(i) not in list3:           
-            answer.append(str(i))  
+    for i in range(1, 10):
+        if str(i) not in list1 and str(i) not in list2 and str(i) not in list3:
+            answer.append(str(i))
 
     return set(answer)
-
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
@@ -163,7 +160,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-   
+
     x, y = find_empty_positions(grid)
     if x == None and y == None:
         return grid
@@ -173,20 +170,21 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         answer = solve(grid)
         if answer != False:
             return answer
-    grid[x][y] = '.'
+    grid[x][y] = "."
     return False
+
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
-    a = [str(i) for i in range(1,10)]
-    for i in range(0,9):
-        if sorted(get_row(solution, (i,0))) != a:
+    a = [str(i) for i in range(1, 10)]
+    for i in range(0, 9):
+        if sorted(get_row(solution, (i, 0))) != a:
             return False
-        if sorted(get_col(solution, (0,i))) != a:
+        if sorted(get_col(solution, (0, i))) != a:
             return False
-    for i in range(0,9,3):
-        for j in range(0,9,3):
-            if sorted(get_block(solution, (i,j))) != a:
+    for i in range(0, 9, 3):
+        for j in range(0, 9, 3):
+            if sorted(get_block(solution, (i, j))) != a:
                 return False
     return True
 
@@ -215,8 +213,8 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     """
     if N > 81:
         N = 81
-    grid = [['.']*9 for i in range(0,9)]
-    for i in range(1,10):
+    grid = [["."] * 9 for i in range(0, 9)]
+    for i in range(1, 10):
         grid[random.randint(0, 8)][random.randint(0, 8)] = str(i)
     grid = solve(grid)
     i = 0
@@ -225,20 +223,17 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
         column = random.randint(0, 8)
         if grid[row][column] != ".":
             grid[row][column] = "."
-            i += 1       
+            i += 1
     return grid
-    
-    
 
 
 if __name__ == "__main__":
-    for fname in ["puzzle 1.txt", "puzzle2.txt", "puzzle3.txt"]:
+    for fname in ["puzzle 1.txt", "puzzle 2.txt", "puzzle 3.txt"]:
         grid = read_sudoku(fname)
 
         solution = solve(grid)
-        
+
         if not solution:
             print(f"Puzzle {fname} can't be solved")
         else:
             display(solution)
-
