@@ -146,7 +146,6 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-   
     """Как решать Судоку?
         1. Найти свободную позицию
         2. Найти все возможные значения, которые могут находиться на этой позиции
@@ -173,7 +172,6 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
- 
     a = [str(i) for i in range(1, 10)]
     for i in range(0, 9):
         if sorted(get_row(solution, (i, 0))) != a:
