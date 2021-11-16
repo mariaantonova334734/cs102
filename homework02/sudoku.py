@@ -18,20 +18,6 @@ def create_grid(puzzle: str) -> tp.List[tp.List[str]]:
     return grid
 
 
-def display(grid: tp.List[tp.List[str]]) -> None:
-    """Вывод Судоку """
-    width = 2
-    line = "+".join(["-" * (width * 3)] * 3)
-    for row in range(9):
-        print(
-            "".join(
-                grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)
-            )
-        )
-        if str(row) in "25":
-            print(line)
-    print()
-
 
 def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     """
@@ -54,6 +40,23 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
             list1.append(list2)
             list2 = []
     return list1
+
+def display(grid: tp.List[tp.List[str]]) -> None:
+    """Вывод Судоку """
+    width = 2
+    line = "+".join(["-" * (width * 3)] * 3)
+    for row in range(9):
+        print(
+            "".join(
+                grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)
+            )
+        )
+        if str(row) in "25":
+            print(line)
+    print()
+
+
+
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -146,6 +149,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return set(answer)
 
 
+
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     """ Решение пазла, заданного в grid """
     """ Как решать Судоку?
@@ -228,7 +232,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
 
 
 if __name__ == "__main__":
-    for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
+    for fname in ["puzzle 1.txt", "puzzle2.txt", "puzzle3.txt"]:
         grid = read_sudoku(fname)
 
         solution = solve(grid)
@@ -237,3 +241,4 @@ if __name__ == "__main__":
             print(f"Puzzle {fname} can't be solved")
         else:
             display(solution)
+
