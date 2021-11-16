@@ -119,7 +119,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
         for j in range(len(grid[i])):
             if grid[i][j] == ".":
                 return (i, j)
-    #return (None, None)
+    # return (None, None)
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
@@ -168,7 +168,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         if answer != False:
             return answer
     grid[x][y] = "."
-    #return False
+    # return False
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
