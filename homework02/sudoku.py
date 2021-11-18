@@ -159,16 +159,16 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     """
 
     x, y = find_empty_positions(grid)
-    if x == None and y == None:
+    if x is None and y is None:
         return grid
     a = find_possible_values(grid, (x, y))
     for i in a:
         grid[x][y] = i
         answer = solve(grid)
-        if answer != False:
+        if answer is not None:
             return answer
     grid[x][y] = "."
-    return False
+    return None
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
