@@ -168,7 +168,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         if answer != False:
             return answer
     grid[x][y] = "."
-    # return False
+    return False
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
