@@ -159,7 +159,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     """
 
     x, y = find_empty_positions(grid)
-    if x is None and y is None:
+    if (x is None) and (y is None):
         return grid
     a = find_possible_values(grid, (x, y))
     for i in a:
@@ -212,15 +212,15 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     grid = [["."] * 9 for i in range(0, 9)]
     for i in range(1, 10):
         grid[random.randint(0, 8)][random.randint(0, 8)] = str(i)
-    grid = solve(grid)
+    grid1 = solve(grid)
     i = 0
     while i < 81 - N:
         row = random.randint(0, 8)
         column = random.randint(0, 8)
-        if grid[row][column] != ".":
-            grid[row][column] = "."
+        if grid1[row][column] != ".":
+            grid1[row][column] = "."
             i += 1
-    return grid
+    return grid1
 
 
 if __name__ == "__main__":
