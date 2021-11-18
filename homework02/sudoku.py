@@ -231,7 +231,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
             if grid1[row][column] != ".":
                 grid1[row][column] = "."
                 i += 1
-    return grid1
+        return grid1
 
 
 if __name__ == "__main__":
