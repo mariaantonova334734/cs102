@@ -223,12 +223,14 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
         grid[random.randint(0, 8)][random.randint(0, 8)] = str(i)
     grid1 = solve(grid)
     i = 0
-    while i < 81 - N:
-        row = random.randint(0, 8)
-        column = random.randint(0, 8)
-        if grid1[row][column] != ".":
-            grid1[row][column] = "."
-            i += 1
+    if grid1 is not None:
+        while i < 81 - N:
+            row = random.randint(0, 8)
+            column = random.randint(0, 8)
+
+            if grid1[row][column] != ".":
+                grid1[row][column] = "."
+                i += 1
     return grid1
 
 
