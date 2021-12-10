@@ -8,6 +8,7 @@ import pandas as pd
 def create_grid(rows: int = 15, cols: int = 15) -> List[List[Union[str, int]]]:
     return [["■"] * cols for _ in range(rows)]
 
+
 def bin_tree_maze(
     rows: int = 15, cols: int = 15, random_exit: bool = True
 ) -> List[List[Union[str, int]]]:
@@ -26,8 +27,8 @@ def bin_tree_maze(
         nachalo = (0, rows - 1)
         konec = (cols - 1, 0)
 
-   #задать начало и конец сетки с помощью Х
-    grid[nachalo[0]][nachalo[1]]="X"
+    # задать начало и конец сетки с помощью Х
+    grid[nachalo[0]][nachalo[1]] = "X"
     grid[konec[0]][konec[1]] = "X"
     # cicl  dla prohojdenia po rows ,to remove walls(right or up)
     for currenty in range(1, rows, 2):  # prohodim po 2 kletki
@@ -57,13 +58,13 @@ def bin_tree_maze(
 
 
 def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
-    list1=[]
+    list1 = []
     for y in range(len(grid)):
-        if "X"==grid[y][0]:
-            list1.append((y,0))
+        if "X" == grid[y][0]:
+            list1.append((y, 0))
     for x in range(len(grid)):
-        if "X"==grid[0][x]:
-            list1.append((0,x))
+        if "X" == grid[0][x]:
+            list1.append((0, x))
     return list1
 
 
@@ -71,20 +72,20 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
     for row in range(len(grid) - 1):
         for col in range(len(grid[row]) - 1):
             if grid[row][col] == k:
-                if grid[row+1][col]==0:
-                    grid[row+1][col] = k+1
-                if grid[row-1][col]==0:
-                    grid[row-1][col] = k+1
-                if grid[row][col+1]==0:
-                    grid[row][col+1] = k+1
-                if grid[row][col-1]==0:
-                    grid[row][col-1] = k+1
+                if grid[row + 1][col] == 0:
+                    grid[row + 1][col] = k + 1
+                if grid[row - 1][col] == 0:
+                    grid[row - 1][col] = k + 1
+                if grid[row][col + 1] == 0:
+                    grid[row][col + 1] = k + 1
+                if grid[row][col - 1] == 0:
+                    grid[row][col - 1] = k + 1
     return grid
 
 
 def shortest_path(
     grid: List[List[Union[str, int]]], exit_coord: Tuple[int, int]
-) -> Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]:
+) -> Optional[List[Tuple[int, int]]]:
     """
 3. По полученной разметке ищем путь домой:
     1. запрыгиваем в клетку выхода
@@ -96,7 +97,7 @@ def shortest_path(
         2. заполняем неудачную клетку пробелом, чтобы никогда больше в нее не вернуться
         3. рекурсивно повторяем пункт 3, пока не найдем путь (ситуация, когда его нет, к этому моменту уже исключена)
     """
-    path=[exit_coord]
+    path = [exit_coord]
     currentcoord = exit_coord
     k = grid[currentcoord[0]][currentcoord[1]]
     (row, col) = currentcoord
@@ -121,27 +122,26 @@ def shortest_path(
             path.append(currentcoord)
             k -= 1
     print(pd.DataFrame(grid))
-    while grid[currentcoord[0]][currentcoord[1]]!=1:
-        (row,col)=currentcoord
-        if grid[row + 1][col] ==k-1:
-            currentcoord=(row + 1,col)
+    while grid[currentcoord[0]][currentcoord[1]] != 1:
+        (row, col) = currentcoord
+        if grid[row + 1][col] == k - 1:
+            currentcoord = (row + 1, col)
             path.append(currentcoord)
-            k-=1
-        elif grid[row - 1][col] == k-1:
+            k -= 1
+        elif grid[row - 1][col] == k - 1:
             currentcoord = (row - 1, col)
             path.append(currentcoord)
             k -= 1
-        elif grid[row][col + 1] == k-1:
-            currentcoord = (row, col+1)
+        elif grid[row][col + 1] == k - 1:
+            currentcoord = (row, col + 1)
             path.append(currentcoord)
             k -= 1
-        elif grid[row][col - 1] == k-1:
-            currentcoord = (row, col-1)
+        elif grid[row][col - 1] == k - 1:
+            currentcoord = (row, col - 1)
             path.append(currentcoord)
             k -= 1
-    #if len(path)!=grid[exit_coord[0]][exit_coord[1]]:
+    # if len(path)!=grid[exit_coord[0]][exit_coord[1]]:
     return path
-
 
 
 def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> bool:
@@ -151,65 +151,67 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
 2. дверь попала на одну из стенок и окружена с трех сторон → возвращаем `True`
 3. клетка лежит на одной из стенок и окружена с двух сторон, проход к следующей пустой есть → возвращаем `False`
     """
-    #проверяем первое условие
-    if coord==(0,0) or coord==(0,len(grid)-1) or coord==(len(grid[0])-1,0) or coord==(len(grid[0])-1,len(grid)-1):
+    # проверяем первое условие
+    if (
+        coord == (0, 0)
+        or coord == (0, len(grid) - 1)
+        or coord == (len(grid[0]) - 1, 0)
+        or coord == (len(grid[0]) - 1, len(grid) - 1)
+    ):
         return True
-    #проверяем второе условие
-    if coord[1]==0: #если координата х=0(вввыход на левой стенке)
-        if grid[coord[0]][coord[1]+1]=="■":
+    # проверяем второе условие
+    if coord[1] == 0:  # если координата х=0(вввыход на левой стенке)
+        if grid[coord[0]][coord[1] + 1] == "■":
             return True
-    if coord[0]==0:#eсли координата y=0 (выход на верхенй стенке)
-        if grid[coord[0]+1][coord[1]] == "■":
+    if coord[0] == 0:  # eсли координата y=0 (выход на верхенй стенке)
+        if grid[coord[0] + 1][coord[1]] == "■":
             return True
-    if coord[0]==len(grid)-1: #если координаnf= последней(вввыход на нижнейстенке)
-        if grid[coord[0]-1][coord[1]]=="■":
+    if coord[0] == len(grid) - 1:  # если координаnf= последней(вввыход на нижнейстенке)
+        if grid[coord[0] - 1][coord[1]] == "■":
             return True
-    if coord[1]==len(grid[0])-1:#eсли координата y=0 (выход на верхенй стенке)
-        if grid[coord[0]][coord[1]-1] == "■":
+    if coord[1] == len(grid[0]) - 1:  # eсли координата y=0 (выход на верхенй стенке)
+        if grid[coord[0]][coord[1] - 1] == "■":
             return True
-    return False #значит выполняется третье условие
+    return False  # значит выполняется третье условие
 
 
-def solve_maze(
-    grid: List[List[Union[str, int]]]
-) -> Optional[List[Tuple[int, int]]]:
+def solve_maze(grid: List[List[Union[str, int]]]) -> Optional[List[Tuple[int, int]]]:
     exits = get_exits(grid)
-    if len(exits)==1:
-        return (grid,exits)
+    if len(exits) == 1:
+        return None
     # если все же выходов два, проверяем, что мы не в тупике. Если в тупике,
-		# возвращаем None, пути нет
+    # возвращаем None, пути нет
     for i in exits:
-        if encircled_exit(grid,i):
+        if encircled_exit(grid, i):
             return None
-    nachalo=exits[0]
-    konec=exits[1]
-   #клетка входа=1, остальное=0
-    grid[nachalo[0]][nachalo[1]]=1
-    for row in range(len(grid)-1):
-       for col in range(len(grid[row])-1):
-            if grid[row][col]==" ":
-                grid[row][col]=0
+    nachalo = exits[0]
+    konec = exits[1]
+    # клетка входа=1, остальное=0
+    grid[nachalo[0]][nachalo[1]] = 1
+    for row in range(len(grid) - 1):
+        for col in range(len(grid[row]) - 1):
+            if grid[row][col] == " ":
+                grid[row][col] = 0
 
-    grid[konec[0]][konec[1]]= 0
+    grid[konec[0]][konec[1]] = 0
 
-    k=1
-    if nachalo[0]!=len(grid)-1:
+    k = 1
+    if nachalo[0] != len(grid) - 1:
         if grid[nachalo[0] + 1][nachalo[1]] == 0:
             grid[nachalo[0] + 1][nachalo[1]] = k + 1
-    if nachalo[0]!=0:
+    if nachalo[0] != 0:
         if grid[nachalo[0] - 1][nachalo[1]] == 0:
             grid[nachalo[0] - 1][nachalo[1]] = k + 1
-    if nachalo[1]!=len(grid[0])-1:
+    if nachalo[1] != len(grid[0]) - 1:
         if grid[nachalo[0]][nachalo[1] + 1] == 0:
             grid[nachalo[0]][nachalo[1] + 1] = k + 1
-    if nachalo[1]!=0:
+    if nachalo[1] != 0:
         if grid[nachalo[0]][nachalo[1] - 1] == 0:
             grid[nachalo[0]][nachalo[1] - 1] = k + 1
     while grid[konec[0]][konec[1]] == 0:
-        k+=1
-        make_step(grid,k)
+        k += 1
+        make_step(grid, k)
     return shortest_path(grid, konec)
-
 
 
 def add_path_to_grid(
@@ -227,7 +229,7 @@ def add_path_to_grid(
 if __name__ == "__main__":
     GRID = bin_tree_maze(15, 15)
     print(pd.DataFrame(GRID))
-    grid1=[row[:] for row in GRID]
+    grid1 = [row[:] for row in GRID]
     path1 = solve_maze(grid1)
     MAZE = add_path_to_grid(GRID, path1)
     print(pd.DataFrame(MAZE))
