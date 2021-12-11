@@ -10,6 +10,7 @@ from pyvcs.refs import update_ref
 from pyvcs.repo import repo_find
 
 
+
 def hash_object(data: bytes, fmt: str, write: bool = False) -> str:
     # PUT YOUR CODE HERE
     ...
