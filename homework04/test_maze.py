@@ -2,7 +2,6 @@ import unittest
 from random import seed
 import maze
 
-
 class MazeTest(unittest.TestCase):
     def test_remove_wall(self):
         seed(2)
