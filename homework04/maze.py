@@ -102,7 +102,7 @@ def shortest_path(
     k = grid[currentcoord[0]][currentcoord[1]]
     (row, col) = currentcoord
     if currentcoord[0] != len(grid) - 1:
-        if grid[row + 1][col] == (k - 1):
+        if str(grid[row + 1][col]) == str(k - 1):
             currentcoord = (row + 1, col)
             path.append(currentcoord)
             k -= 1
