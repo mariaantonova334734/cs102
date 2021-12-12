@@ -27,17 +27,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    list1 = []
-    list2 = []
-    j = 0
-    for i in values:
-        if j < n:
-            list2.append(i)
-            j += 1
-        if j == n:
-            j = 0
-            list1.append(list2)
-            list2 = []
+    list1 =[values[i:i+n] for i in range(0,len(values),n)]
     return list1
 
 
@@ -78,11 +68,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    list1 = []
-    for j in grid:
-        for i in range(len(j)):
-            if i == pos[1]:
-                list1.append(j[i])
+    list1 = [j[i] for j in grid for i in range(len(j)) if i == pos[1]]
     return list1
 
 
