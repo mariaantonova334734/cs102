@@ -85,7 +85,7 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
 
 def shortest_path(
     grid: List[List[Union[str, int]]], exit_coord: Tuple[int, int]
-) -> Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]:
+) -> Optional[List[Tuple[int, int]]]:
     """
     3. По полученной разметке ищем путь домой:
         1. запрыгиваем в клетку выхода
