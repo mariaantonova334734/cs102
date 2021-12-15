@@ -237,17 +237,18 @@ class MazeTest(unittest.TestCase):
         seed(34)
         grid = maze.bin_tree_maze(5, 5)
         path_ = maze.solve_maze(grid)
-        self.assertEqual([(3, 0), (3, 1), (2, 1), (1, 1), (1, 2), (1, 3), (2, 3), (2, 4)], path_)
+        self.assertIsNone(path_)
 
         seed(4)
         grid = maze.bin_tree_maze(5, 5)
         path_ = maze.solve_maze(grid)
-        self.assertEqual([(3, 0), (3, 1), (2, 1), (1, 1), (1, 0)], path_)
+        self.assertIsNone(path_)
 
         seed(44)
         grid = maze.bin_tree_maze(5, 5)
         path_ = maze.solve_maze(grid)
-        self.assertEqual([(2, 0), (1, 0)], path_)
+        self.assertIsNone(path_)
+        #self.assertEqual([(0, 3), (1, 3), (1, 2), (1, 1), (1, 0)], path_)
 
         seed(131)
         grid = maze.bin_tree_maze(5, 5)
@@ -257,12 +258,12 @@ class MazeTest(unittest.TestCase):
         seed(151)
         grid = maze.bin_tree_maze(5, 5)
         path_ = maze.solve_maze(grid)
-        self.assertIsNone(path_)
+        self.assertEqual([(0, 3), (1, 3), (1, 2), (1, 1), (1, 0)], path_)
 
         seed(773)
         grid = maze.bin_tree_maze(5, 5)
         path_ = maze.solve_maze(grid)
-        self.assertEqual([(4, 3), (3, 3), (3, 2), (3, 1), (3, 0)], path_)
+        self.assertEqual([(0, 1), (1, 1), (1, 2), (1, 3), (2, 3), (3, 3), (3, 2), (3, 1), (3, 0)], path_)
 
     def test_shortest_path(self):
         grid_1 = [
