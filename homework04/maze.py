@@ -12,7 +12,21 @@ def create_grid(rows: int = 15, cols: int = 15) -> List[List[Union[str, int]]]:
 def remove_wall(
     grid: List[List[Union[str, int]]], coord: Tuple[int, int]
 ) -> List[List[Union[str, int]]]:
-    grid[coord[0]][coord[1]] = " "
+    currenty,currentx = coord
+    cols=len(grid[0])
+    napravlenie = randint(0, 1)  # choose right or up direction
+    if napravlenie == 0:  # идем наверх
+        if currenty == 1:  # if not up, идем вправо
+            if currentx != cols - 2:  # no delete last wall right
+                grid[currenty][currentx + 1] = " "
+        else:  # if up
+            grid[currenty - 1][currentx] = " "
+    else:  # if choose right
+        if currentx != cols - 2:  # v sluchaye esli  mesta na right
+            grid[currenty][currentx + 1] = " "
+        else:  # go up
+            if currenty != 1:  # not last wall(up), delete wall
+                grid[currenty - 1][currentx] = " "
     return grid
 
 
@@ -72,7 +86,7 @@ def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
     for x in range(len(grid)):
         if "X" == grid[0][x]:
             list1.append((0, x))
-    return list1
+    return sorted(list1)
 
 
 def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str, int]]]:
@@ -128,7 +142,6 @@ def shortest_path(
             currentcoord = (row, col - 1)
             path.append(currentcoord)
             k -= 1
-    print(pd.DataFrame(grid))
     while grid[currentcoord[0]][currentcoord[1]] != 1:
         (row, col) = currentcoord
         if grid[row + 1][col] == k - 1:
