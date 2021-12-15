@@ -12,8 +12,8 @@ def create_grid(rows: int = 15, cols: int = 15) -> List[List[Union[str, int]]]:
 def remove_wall(
     grid: List[List[Union[str, int]]], coord: Tuple[int, int]
 ) -> List[List[Union[str, int]]]:
-    currenty,currentx = coord
-    cols=len(grid[0])
+    currenty, currentx = coord
+    cols = len(grid[0])
     napravlenie = randint(0, 1)  # choose right or up direction
     if napravlenie == 0:  # идем наверх
         if currenty == 1:  # if not up, идем вправо
