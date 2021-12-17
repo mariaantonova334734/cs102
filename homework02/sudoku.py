@@ -27,7 +27,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    list1 =[values[i:i+n] for i in range(0,len(values),n)]
+    list1 = [values[i: i + n] for i in range(0, len(values), n)]
     return list1
 
 
@@ -122,7 +122,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     row_list = get_row(grid, pos)
     col_list = get_col(grid, pos)
     block_list = get_block(grid, pos)
-    set_of_num = set(row_list+col_list+block_list)
+    set_of_num = set(row_list + col_list + block_list)
     answer = set(str(i) for i in range(1, 10))
     answer -= set_of_num
     return set(answer)
