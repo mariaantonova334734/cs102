@@ -31,7 +31,7 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
-            return [[random.randint(0,1) for _ in range(self.cols)] for _ in range(self.rows)]
+            return [[random.randint(0, 1) for _ in range(self.cols)] for _ in range(self.rows)]
         else:
             return [[0 for _ in range(self.cols)] for _ in range(self.rows)]
 
@@ -90,7 +90,7 @@ class GameOfLife:
         """
         Прочитать состояние клеток из указанного файла.
         """
-        with open(filename, encoding='utf-8') as file_input:
+        with open(filename, encoding="utf-8") as file_input:
             input_list = file_input.read().splitlines()
             grid = [[int(cell) for cell in row] for row in input_list]
             # for row in input_list:
@@ -98,7 +98,7 @@ class GameOfLife:
             #     for cell in row:
             #         line.append(int(cell))
             #     grid.append(line)
-            #file_input.close()
+            # file_input.close()
             game_of_life = GameOfLife((len(grid), len(grid[0])))
             game_of_life.curr_generation = grid
         return game_of_life
@@ -107,10 +107,9 @@ class GameOfLife:
         """
         Сохранить текущее состояние клеток в указанный файл.
         """
-        with open(filename, "w", encoding='utf-8') as file_input:
+        with open(filename, "w", encoding="utf-8") as file_input:
             for row in self.curr_generation:
                 for cell in row:
                     file_input.write(str(cell))
                 file_input.write("\n")
-        #file_input.close()
-
+        # file_input.close()
