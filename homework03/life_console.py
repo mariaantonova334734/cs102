@@ -22,6 +22,4 @@ class Console(UI):
                     screen.addch(pos_in_row + 1, pos_in_col + 1, " ")
 
     def run(self) -> None:
-
-
         curses.endwin()
