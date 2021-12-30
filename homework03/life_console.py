@@ -37,27 +37,18 @@ class Console(UI):
         running = True
         pause = False
         while running:
-            screen = curses.initscr()
-            curses.noecho()
-            screen.clear()
-            screen.refresh()
-            window = curses.newwin(self.life.rows + 2, self.life.cols + 2)
-            self.draw_borders(window)
-            window.timeout(1)
-            window.nodelay(True)
-            running = True
-            pause = False
-            while running:
-                current_element = window.getch()
-                if current_element == ord("\n"):
-                    pause = False
-                elif current_element == ord("S"):
-                    self.life.save(self.saving)
-                elif current_element == curses.ascii.ESC:
-                    running = False
-                if not pause:
-                    self.draw_grid(window)
-                    window.refresh()
-                    self.life.step()
-                    time.sleep(2)
-            curses.endwin()
+            current_element = window.getch()
+            if current_element == ord("\n"):
+                pause = False
+            else:
+                pause = True
+            elif current_element == ord("S"):
+                self.life.save(self.saving)
+            elif current_element == curses.ascii.ESC:
+                running = False
+            if not pause:
+                self.draw_grid(window)
+                window.refresh()
+                self.life.step()
+                time.sleep(2)
+        curses.endwin()
