@@ -40,8 +40,6 @@ class Console(UI):
             current_element = window.getch()
             if current_element == ord("\n"):
                 pause = False
-            else:
-                pause = True
             elif current_element == ord("S"):
                 self.life.save(self.saving)
             elif current_element == curses.ascii.ESC:
