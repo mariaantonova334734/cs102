@@ -9,11 +9,11 @@ class Console(UI):
         super().__init__(life)
 
     def draw_borders(self, screen) -> None:
-        """ Отобразить рамку. """
+        """Отобразить рамку."""
         screen.border()
 
     def draw_grid(self, screen) -> None:
-        """ Отобразить состояние клеток. """
+        """Отобразить состояние клеток."""
         for pos_in_row in range(self.life.rows):
             for pos_in_col in range(self.life.cols):
                 if self.life.curr_generation[pos_in_row][pos_in_col] == 1:
