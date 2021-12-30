@@ -28,8 +28,8 @@ class Console(UI):
     def run(self) -> None:
         screen = curses.initscr()
         curses.noecho()
-        screen.clear() # type: ignore
-        screen.refresh() # type: ignore
+        screen.clear()  # type: ignore
+        screen.refresh()  # type: ignore
         window = curses.newwin(self.life.rows + 2, self.life.cols + 2)
         self.draw_borders(window)
         window.timeout(1)
