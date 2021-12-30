@@ -119,6 +119,7 @@ class GameOfLife:
 
     def get_next_generation(self) -> Grid:
         """
+
         Получить следующее поколение клеток.
 
         Returns
