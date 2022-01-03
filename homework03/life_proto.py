@@ -32,10 +32,10 @@ class GameOfLife:
 
     def draw_lines(self) -> None:
         """Отрисовать сетку"""
-        for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
-        for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
+        for x_position in range(0, self.width, self.cell_size):
+            pygame.draw.line(self.screen, pygame.Color("black"), (x_position, 0), (x_position, self.height))
+        for y_position in range(0, self.height, self.cell_size):
+            pygame.draw.line(self.screen, pygame.Color("black"), (0, y_position), (self.width, y_position))
 
     def run(self) -> None:
         """Запустить игру"""
@@ -95,7 +95,7 @@ class GameOfLife:
                     self.cell_size,
                 )
                 if self.grid[pos_of_height][pos_of_width]:
-                    pygame.draw.rect(self.screen, pygame.Color("yellow"), rect)
+                    pygame.draw.rect(self.screen, pygame.Color("green"), rect)
                 else:
                     pygame.draw.rect(self.screen, pygame.Color("red"), rect)
 
