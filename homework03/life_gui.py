@@ -1,5 +1,4 @@
 from pathlib import Path
-import argparse
 import pygame
 from life import GameOfLife
 from pygame.locals import *
