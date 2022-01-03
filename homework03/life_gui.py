@@ -1,8 +1,9 @@
 from pathlib import Path
 
 import pygame
-from life import GameOfLife
 from pygame.locals import *
+
+from life import GameOfLife
 from ui import UI
 
 
@@ -24,9 +25,19 @@ class GUI(UI):
 
     def draw_lines(self) -> None:
         for x_position in range(0, self.width, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color("black"), (x_position, 0), (x_position, self.height))
+            pygame.draw.line(
+                self.screen,
+                pygame.Color("black"),
+                (x_position, 0),
+                (x_position, self.height),
+            )
         for y_position in range(0, self.height, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color("black"), (0, y_position), (self.width, y_position))
+            pygame.draw.line(
+                self.screen,
+                pygame.Color("black"),
+                (0, y_position),
+                (self.width, y_position),
+            )
 
     def draw_grid(self) -> None:
         for pos_of_rows in range(self.life.rows):
@@ -49,7 +60,7 @@ class GUI(UI):
         is_game_running = True
         is_game_in_pause = False
         while is_game_running:
-            if self.life.is_max_generations_exceeded or  not self.life.is_changing:
+            if self.life.is_max_generations_exceeded or not self.life.is_changing:
                 is_game_running = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -67,7 +78,9 @@ class GUI(UI):
                         click_position[1] // self.cell_size,
                         click_position[0] // self.cell_size,
                     )
-                    self.life.curr_generation[x_position][y_position] = 1 - self.life.curr_generation[x_position][y_position]
+                    self.life.curr_generation[x_position][y_position] = (
+                        1 - self.life.curr_generation[x_position][y_position]
+                    )
             self.draw_lines()
             self.draw_grid()
             if not is_game_in_pause:
@@ -75,6 +88,7 @@ class GUI(UI):
             pygame.display.flip()
             clock.tick(self.speed)
         pygame.quit()
+
 
 if __name__ == "__main__":
     life = GameOfLife((30, 30), randomize=True)
