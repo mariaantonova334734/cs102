@@ -4,9 +4,6 @@ import time
 import typing as tp
 
 
-from homework05.vkapi.config import VK_CONFIG # type: ignore
-from homework05.vkapi.session import Session # type: ignore
-
 session = Session(VK_CONFIG["domain"])  # запуск сессии
 # from session import session #config,
 # from vkapi.exceptions import APIError
