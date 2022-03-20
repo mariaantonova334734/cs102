@@ -9,7 +9,7 @@ from requests.exceptions import (  # type: ignore
     ReadTimeout,
     RetryError,
 )
-from homework05.vkapi.session import Session # type: ignore
+from vkapi.session import Session
 
 
 class TestSession(unittest.TestCase):
