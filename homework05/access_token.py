@@ -2,6 +2,7 @@ import argparse
 import webbrowser
 
 
+
 def get_access_token(client_id: int, scope: str) -> None:
     assert isinstance(client_id, int), "clinet_id must be positive integer"
     assert isinstance(scope, str), "scope must be string"
