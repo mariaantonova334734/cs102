@@ -5,7 +5,6 @@ import requests  # type: ignore
 from requests.adapters import HTTPAdapter  # type: ignore
 from requests.packages.urllib3.util.retry import Retry  # type: ignore
 
-import homework05.vkapi.config as config
 
 class Session:
     """
