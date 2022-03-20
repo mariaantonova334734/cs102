@@ -9,8 +9,8 @@ from requests.exceptions import (  # type: ignore
     ReadTimeout,
     RetryError,
 )
-
 from homework05.vkapi.session import Session # type: ignore
+
 
 class TestSession(unittest.TestCase):
     @httpretty.activate
