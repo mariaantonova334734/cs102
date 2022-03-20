@@ -20,10 +20,10 @@ class FriendsResponse:
 
 
 def get_friends(
-    user_id: int, # type: ignore
+    user_id: int,  # type: ignore
     count: int = 5000,
     offset: int = 0,
-    fields: tp.Optional[tp.List[str]] = None, # type: ignore
+    fields: tp.Optional[tp.List[str]] = None,  # type: ignore
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
@@ -37,10 +37,10 @@ def get_friends(
     """
     domain = VK_CONFIG["domain"]
     access_token = VK_CONFIG["access_token"]
-    v = VK_CONFIG["version"] # type: ignore
-    fields = ", ".join(fields) if fields else "" # type: ignore
+    v = VK_CONFIG["version"]  # type: ignore
+    fields = ", ".join(fields) if fields else ""  # type: ignore
     # user_id = 274205023  #номер страницы
-    if not user_id: # type: ignore
+    if not user_id:  # type: ignore
         query = f"{domain}/friends.get?access_token={access_token}&fields={fields}&v={v}"
     else:
         query = f"{domain}/friends.get?access_token={access_token}&user_id={user_id}&fields={fields}&v={v}"
