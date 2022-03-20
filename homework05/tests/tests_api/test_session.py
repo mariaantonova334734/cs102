@@ -11,6 +11,7 @@ from requests.exceptions import (  # type: ignore
 )
 
 
+
 from homework05.vkapi.session import Session # type: ignore
 
 class TestSession(unittest.TestCase):
