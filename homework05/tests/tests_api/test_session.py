@@ -1,11 +1,17 @@
 import time
-import typing as tp
+import unittest
 
-import requests  # type: ignore
-from requests.adapters import HTTPAdapter  # type: ignore
-from requests.packages.urllib3.util.retry import Retry  # type: ignore
+import httpretty
+import responses
+from requests.exceptions import (  # type: ignore
+    ConnectionError,
+    HTTPError,
+    ReadTimeout,
+    RetryError,
+)
 
-from homework05.vkapi.session import Session
+
+from homework05.vkapi.session import Session # type: ignore
 
 class TestSession(unittest.TestCase):
     @httpretty.activate
