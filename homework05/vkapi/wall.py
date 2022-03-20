@@ -101,7 +101,10 @@ def get_wall_execute(
     if not progress:
         progress = lambda x: x
     for i in progress(
-        range(0, math.ceil((response["response"]["count"] if count == 0 else count) / max_count))
+        range(
+            0,
+            math.ceil((response["response"]["count"] if count == 0 else count) / max_count),
+        )
     ):
         outdt = outdt.append(
             pandas.json_normalize(

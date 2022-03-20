@@ -5,7 +5,6 @@ from urllib.parse import unquote
 
 import pandas as pd
 import responses
-
 from homework05.vkapi.wall import get_wall_execute
 
 

@@ -1,10 +1,10 @@
 import time
 import typing as tp
+
 import homework05.vkapi.config as config
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-
 
 
 class Session:
@@ -16,11 +16,13 @@ class Session:
     :param max_retries: Максимальное число повторных запросов.
     :param backoff_factor: Коэффициент экспоненциального нарастания задержки.
     """
+
     base_url: str
     timeout: float
     max_retries: int
     backoff_factor: float
     http: Retry
+
     def __init__(
         self,
         base_url: str,
@@ -28,7 +30,7 @@ class Session:
         max_retries: int = 3,
         backoff_factor: float = 0.3,
     ) -> None:
-        self.base_url = base_url #передается аргумент base_url в параметр класса  self.base_url
+        self.base_url = base_url  # передается аргумент base_url в параметр класса  self.base_url
         self.timeout = timeout
         self.session = requests.Session()
         errors = []
@@ -39,7 +41,7 @@ class Session:
             total=max_retries,
             backoff_factor=backoff_factor,
             status_forcelist=errors,
-            method_whitelist=["POST", "GET"]
+            method_whitelist=["POST", "GET"],
         )
         adapter = HTTPAdapter(max_retries=retry)
         self.session.mount("https://", adapter)
@@ -75,6 +77,7 @@ class Session:
     #     response = self.http.post(url, timeout=self.timeout)
     #     response.raise_for_status()
     #     return response
+
 
 if __name__ == "__main__":
     session = Session("https://en.wikipedia.org")

@@ -5,7 +5,6 @@ import community as community_louvain
 import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
-
 from homework05.vkapi.friends import get_friends, get_mutual
 
 
@@ -18,12 +17,14 @@ def ego_network(
     :param user_id: Идентификатор пользователя, для которого строится граф друзей.
     :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
     """
-    #если информация передана, то не проверяем
-    #если информацию получаем сами - проверяем
-    graph1 =[]
+    # если информация передана, то не проверяем
+    # если информацию получаем сами - проверяем
+    graph1 = []
 
     if not friends:
-        friends_request = get_friends(user_id, fields=["nickname", "is_closed", "deactivate"])#запрашиваем друзей в случае, если они не представлены до этого
+        friends_request = get_friends(
+            user_id, fields=["nickname", "is_closed", "deactivate"]
+        )  # запрашиваем друзей в случае, если они не представлены до этого
         friends = [
             friend["id"]
             for friend in friends_request
@@ -42,6 +43,8 @@ def ego_network(
         for common in mutual_m["common_friends"]:
             graph1.append((mutual_m["id"], common))
     return graph1
+
+
 def plot_ego_network(net: tp.List[tp.Tuple[int, int]]) -> None:
     graph = nx.Graph()
     graph.add_edges_from(net)
@@ -87,6 +90,8 @@ def describe_communities(
                     data.append([cluster_n] + [friend.get(field) for field in fields])  # type: ignore
                     break
     return pd.DataFrame(data=data, columns=["cluster"] + fields)
+
+
 if __name__ == "__main__":
-    #print(ego_network())
+    # print(ego_network())
     plot_ego_network(ego_network())
