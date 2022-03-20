@@ -2,8 +2,9 @@ import dataclasses
 import math
 import time
 import typing as tp
-
+ 
 import requests
+
 from homework05.vkapi.config import VK_CONFIG
 from homework05.vkapi.session import Session
 
