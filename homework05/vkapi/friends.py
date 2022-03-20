@@ -1,7 +1,6 @@
 import dataclasses
 import math
 import time
-
 import typing as tp 
 
 session = Session(VK_CONFIG["domain"])  # запуск сессии
