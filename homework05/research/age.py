@@ -14,21 +14,25 @@ def age_predict(user_id: int) -> tp.Optional[float]:
     :param user_id: Идентификатор пользователя.
     :return: Медианный возраст пользователя.
     """
-    list_of_friends = get_friends(user_id, fields="bdate")
-    age = []
-    date_today = dt.date.today()
+
+    time = dt.date.today()
+    age_of_people = []
+    list_of_friends = get_friends(user_id, fields=["bdate"]).items
     for friend in list_of_friends:
         try:
-            b_date_str = friend["bdate"]
-            b_date = dt.datetime.strptime(
-                b_date_str, "%d.%m.%Y"
-            ).date()  # дата рождения только дата в формате даты, без времени
-            age_of_fr = date_today - b_date
-            age.append(age_of_fr.days // 365)  # добавляем возраст друзей в список
-        except:
-            continue  # если нет возраста в вк
-    age = sorted(age)
-    return age[len(age) // 2]  # возвращает медианный возраст
+            bdate = dt.datetime.strptime(friend["bdate"], "%d.%m.%Y")  # type: ignore
+        except (KeyError, ValueError):
+            continue
+        age_of_people.append(
+            time.year
+            - bdate.year
+            - (time.month < bdate.month or (time.month == bdate.month and time.day < bdate.day))
+        )
+
+    if age_of_people:
+        return statistics.median(age_of_people)
+    else:
+        return None
 
 
-# age_predict(274205023)
+print(age_predict(274205023))
