@@ -3,7 +3,7 @@ import math
 import time
 import typing as tp
 
-import requests
+import requests # type: ignore
 
 from homework05.vkapi.config import VK_CONFIG
 from homework05.vkapi.session import Session
@@ -133,7 +133,7 @@ def get_mutual(
 
 
 if __name__ == "__main__":
-    print(get_friends(274205023, count=10, offset=10, fields="bdate"))
+    #print(get_friends(274205023, count=10, offset=10, fields="bdate")) # type: ignore
     print(get_mutual(274205023, 289180780))
     print(get_mutual(274205023, target_uids=[133985865, 289180780, 145904017]))  # общие друзья
-    print(get_friends(None, count=10, offset=10, fields="bdate"))
+    #print(get_friends(None, count=10, offset=10, fields="bdate")) # type: ignore
