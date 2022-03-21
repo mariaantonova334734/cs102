@@ -21,7 +21,7 @@ def age_predict(user_id: int) -> tp.Optional[float]:
     for friend in list_of_friends:
         try:
             bdate = dt.datetime.strptime(friend["bdate"], "%d.%m.%Y")  # type: ignore
-        except (KeyError, ValueError):
+        except:
             continue
         age_of_people.append(
             time.year
@@ -33,6 +33,3 @@ def age_predict(user_id: int) -> tp.Optional[float]:
         return statistics.median(age_of_people)
     else:
         return None
-
-
-print(age_predict(274205023))
