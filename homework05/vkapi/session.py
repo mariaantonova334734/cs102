@@ -63,17 +63,8 @@ class Session1:
             self.base_url + "/" + url, timeout=self.timeout, *args, **kwargs
         )
         return response
-    
-    
+     
 class Session:
-    """
-    Сессия.
-
-    :param base_url: Базовый адрес, на который будут выполняться запросы.
-    :param timeout: Максимальное время ожидания ответа от сервера.
-    :param max_retries: Максимальное число повторных запросов.
-    :param backoff_factor: Коэффициент экспоненциального нарастания задержки.
-    """
     
     base_url: str
     timeout: float
