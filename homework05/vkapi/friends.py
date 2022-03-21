@@ -3,10 +3,12 @@ import math
 import time
 import typing as tp
 
-from homework05.vkapi.config import VK_CONFIG
-from homework05.vkapi.session import Session1
+import requests
 
-session = Session1(VK_CONFIG["domain"])  # запуск сессии
+from homework05.vkapi.config import VK_CONFIG
+from homework05.vkapi.session import Session
+
+session = Session(VK_CONFIG["domain"])  # запуск сессии
 # from session import session #config,
 # from vkapi.exceptions import APIError
 
@@ -20,10 +22,7 @@ class FriendsResponse:
 
 
 def get_friends(
-    user_id: int,  # type: ignore
-    count: int = 5000,
-    offset: int = 0,
-    fields: tp.Optional[tp.List[str]] = None,  # type: ignore
+    user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
@@ -35,20 +34,20 @@ def get_friends(
     :param fields: Список полей, которые нужно получить для каждого пользователя.
     :return: Список идентификаторов друзей пользователя или список пользователей.
     """
-    domain = VK_CONFIG["domain"]
-    access_token = VK_CONFIG["access_token"]
-    v = VK_CONFIG["version"]  # type: ignore
-    fields = ", ".join(fields) if fields else ""  # type: ignore
-    # user_id = 274205023  #номер страницы
-    if not user_id:  # type: ignore
-        query = f"{domain}/friends.get?access_token={access_token}&fields={fields}&v={v}"
-    else:
-        query = f"{domain}/friends.get?access_token={access_token}&user_id={user_id}&fields={fields}&v={v}"
-    response = session.get(query)
-    response_json = response.json()
-    list_of_friends = response_json["response"]["items"]
-    # обращаемся к объекту класса response
-    return list_of_friends
+    # domain = VK_CONFIG["domain"]
+    session = Session(VK_CONFIG["domain"])  # запуск сессии
+    parm = {
+        "access_token": VK_CONFIG["access_token"],
+        "v": VK_CONFIG["version"],
+        "count": count,
+        "user_id": user_id if user_id else "",  # user_id = 274205023  #номер страницы
+        "fields": ",".join(fields) if fields else "",
+        "offset": offset,
+    }
+    response = session.get("friends.get", params=parm)
+    if "error" in response.json():
+        raise ValueError(response.json()["error"]["error_msg"])
+    return FriendsResponse(**response.json()["response"])  # обращаемся к объекту класса response
 
 
 class MutualFriends(tp.TypedDict):
@@ -81,43 +80,60 @@ def get_mutual(
     domain = VK_CONFIG["domain"]
     access_token = VK_CONFIG["access_token"]
     v = VK_CONFIG["version"]
-    # генерация запроса в зависимости от данных
-    query = f"{domain}/friends.getMutual?access_token={access_token}"
-    if source_uid:
-        query += f"&source_uid={source_uid}"
-    if not target_uids and not target_uid:
-        raise ValueError
+    session = Session(VK_CONFIG["domain"])
+
     list_of_mutualfriends = []
+
     if target_uids:
-        count1 = len(target_uids)
-        # query += f"&target_uids={','.join(list(map(str, target_uids)))}&v={v}"
-        for offset1 in range(0, count1, 100):
-            target_uids_str = ",".join(list(map(str, target_uids)))
-            query += f"&target_uids={target_uids_str}&count={count1}&offset={offset1}&v={v}"
-            count1 -= 100
-            response = session.get(query)  # указывваем формат запроса это get запрос
-            if response.status_code != 200:
-                raise ValueError("Ошибка", response.status_code)
-            response_json = response.json()
-            if "error" in response_json:
-                raise ValueError("Ошибка", response_json["error"])
-            list_of_mutualfriends += response_json["response"]
-    if (
-        target_uid
-    ):  # получаем список идентификаторов пользователей, с которыми мы хотим найти общих друзей если дан target_uids на вход
-        query += f"&target_uid={target_uid}&v={v}"
-        response = session.get(query)  # указывваем формат запроса это get запрос
-        if response.status_code != 200:
-            raise ValueError("Ошибка", response.status_code)
-        response_json = response.json()
-        if "error" in response_json:
-            raise ValueError("Ошибка", response_json["error"])
-        list_of_mutualfriends = response_json["response"]
+        for t_u in range(((len(target_uids) - 1) // 100) + 1):
+            try:
+                mutual_friends = session.get(
+                    "friends.getMutual",
+                    params={
+                        "access_token": access_token,
+                        "v": v,
+                        "source_uid": source_uid,
+                        "target_uid": target_uid,
+                        "target_uids": ",".join(list(map(str, target_uids))),
+                        "order": order,
+                        "count": 100,
+                        "offset": t_u * 100,
+                    },
+                )
+                for friend in mutual_friends.json()["response"]:
+                    list_of_mutualfriends.append(
+                        MutualFriends(
+                            id=friend["id"],
+                            common_friends=list(map(int, friend["common_friends"])),
+                            common_count=friend["common_count"],
+                        )
+                    )
+            except:
+                pass
+            time.sleep(0.38)
+        return list_of_mutualfriends
+
+    try:
+        parm = {
+            "access_token": access_token,
+            "v": v,
+            "source_uid": source_uid,
+            "target_uid": target_uid,
+            "target_uids": target_uids,
+            "order": order,
+            "count": count,
+            "offset": offset,
+        }
+        mutual_friends = session.get("friends.getMutual", params=parm)
+        list_of_mutualfriends.extend(mutual_friends.json()["response"])
+
+    except:
+        pass
     return list_of_mutualfriends
 
 
 if __name__ == "__main__":
-    # print(get_friends(274205023, count = 10,offset = 10,  fields= 'bdate'))
-    print(get_mutual(274205023, 289180780))  # общие друзья
-    print(get_mutual(274205023, target_uids=[133985865, 289180780, 145904017]))
-    # print(get_friends(None, count=10, offset=10, fields='bdate'))
+    print(get_friends(274205023, count=10, offset=10, fields="bdate"))
+    print(get_mutual(274205023, 289180780))
+    print(get_mutual(274205023, target_uids=[133985865, 289180780, 145904017]))  # общие друзья
+    print(get_friends(None, count=10, offset=10, fields="bdate"))
