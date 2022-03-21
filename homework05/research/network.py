@@ -21,25 +21,17 @@ def ego_network(
     # если информация передана, то не проверяем
     # если информацию получаем сами - проверяем
     graph1 = []
-
     if not friends:
-        friends_request = get_friends(
-            user_id, fields=["nickname", "is_closed", "deactivate"]
-        )  # запрашиваем друзей в случае, если они не представлены до этого
+        friends_fields: tp.List[tp.Dict[str, tp.Any]] = get_friends(
+            user_id, fields=["nickname", "is_closed, deactivate"]
+        ).items  # type: ignore
         friends = [
             friend["id"]
-            for friend in friends_request
-            if not (friend.get("deactivated") or friend.get("is_closed"))
+            for friend in friends_fields
+            if not (friend.get("deactivate") or friend.get("is_closed"))
         ]
 
     mutual_friends = get_mutual(user_id, target_uids=friends)
-    # ###
-    # for mutual_friend in mutual_friends:
-    #     mutual = tp.cast(MutualFriends, mutual_friend)
-    #     for common_fr in mutual["common_friends"]:
-    #         graph1.append((mutual["id"], common_fr))
-    # return graph1
-    # ####
     for mutual_m in mutual_friends:
         for common in mutual_m["common_friends"]:
             graph1.append((mutual_m["id"], common))
@@ -88,11 +80,13 @@ def describe_communities(
         for uid in cluster_users:
             for friend in friends:
                 if uid == friend["id"]:
-                    data.append([cluster_n] + [friend.get(field) for field in fields])  # type: ignore
+                    data.append(
+                        [cluster_n] + [friend.get(field) for field in fields]
+                    )  # type: ignore
                     break
     return pd.DataFrame(data=data, columns=["cluster"] + fields)
 
 
 if __name__ == "__main__":
-    # print(ego_network())
+    print(ego_network())
     plot_ego_network(ego_network())
