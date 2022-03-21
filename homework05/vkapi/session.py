@@ -23,11 +23,7 @@ class Session1:
     http: Retry
 
     def __init__(
-        self,
-        base_url: str,
-        timeout: float = 5.0,
-        max_retries: int = 3,
-        backoff_factor: float = 0.3,
+        self, base_url: str, timeout: float = 5.0, max_retries: int = 3, backoff_factor: float = 0.3
     ) -> None:
         self.base_url = base_url  # передается аргумент base_url в параметр класса  self.base_url
         self.timeout = timeout
@@ -63,21 +59,18 @@ class Session1:
             self.base_url + "/" + url, timeout=self.timeout, *args, **kwargs
         )
         return response
-     
+
+
 class Session:
-    
+
     base_url: str
     timeout: float
     max_retries: int
     backoff_factor: float
     http: Retry
-        
+
     def __init__(
-        self,
-        base_url: str,
-        timeout: float = 5.0,
-        max_retries: int = 3,
-        backoff_factor: float = 0.3,
+        self, base_url: str, timeout: float = 5.0, max_retries: int = 3, backoff_factor: float = 0.3
     ) -> None:
         self.base_url = base_url  # передается аргумент base_url в параметр класса  self.base_url
         self.timeout = timeout
