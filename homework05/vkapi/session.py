@@ -1,8 +1,11 @@
+import time
 import typing as tp
 
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+import requests  # type: ignore
+from requests.adapters import HTTPAdapter  # type: ignore
+from requests.packages.urllib3.util.retry import Retry  # type: ignore
+
+import homework05.vkapi.config as config
 
 
 class Session:
@@ -15,17 +18,50 @@ class Session:
     :param backoff_factor: Коэффициент экспоненциального нарастания задержки.
     """
 
+    base_url: str
+    timeout: float
+    max_retries: int
+    backoff_factor: float
+    http: Retry
+
     def __init__(
-        self,
-        base_url: str,
-        timeout: float = 5.0,
-        max_retries: int = 3,
-        backoff_factor: float = 0.3,
+        self, base_url: str, timeout: float = 5.0, max_retries: int = 3, backoff_factor: float = 0.3
     ) -> None:
-        pass
+        self.base_url = base_url
+        self.timeout = timeout
+        self.session = requests.Session()
+        errors_for_forcelist = []
+        for i in range(400, 600):
+            errors_for_forcelist.append(i)
+
+        self.retry_strategy = Retry(
+            total=max_retries,
+            backoff_factor=backoff_factor,
+            method_whitelist=["GET", "POST"],
+            status_forcelist=errors_for_forcelist,
+        )
+        self.adapter = HTTPAdapter(max_retries=self.retry_strategy)
+        self.session.mount(base_url, self.adapter)
 
     def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        pass
+        if "timeout" in kwargs:
+            kwargs["timeout"] = kwargs["timeout"]
+        else:
+            kwargs["timeout"] = self.timeout
+        response = self.session.get(self.base_url + "/" + url, *args, **kwargs)
+        return response
 
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        pass
+        if "timeout" in kwargs:
+            kwargs["timeout"] = kwargs["timeout"]
+        else:
+            kwargs["timeout"] = self.timeout
+        response = self.session.post(self.base_url + "/" + url, *args, **kwargs)
+        return response
+
+
+if __name__ == "__main__":
+    # session = Session(config.VK_CONFIG["domain"])
+    # session.get("https://findwork.dev/blog/advanced-usage-python-requests-timeouts-retries-hooks/ghghgjhj")
+    # session.get("https://en.wikipedia.org/w/api.php")
+    session = Session(base_url="https://en.wikipedia.org/w/api.php")
