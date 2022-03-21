@@ -3,7 +3,7 @@ import time
 import unittest
 
 import responses
-from vkapi.friends import FriendsResponse, get_friends, get_mutual
+from homework05.vkapi.friends import FriendsResponse, get_friends, get_mutual
 
 
 class FriendsTestCase(unittest.TestCase):
@@ -17,7 +17,7 @@ class FriendsTestCase(unittest.TestCase):
             status=200,
         )
         fids = get_friends(user_id=1)
-        expected_response = [1, 2, 3, 4, 5]
+        expected_response = FriendsResponse(count=5, items=[1, 2, 3, 4, 5])
         self.assertEqual(expected_response, fids)
 
     @responses.activate
@@ -95,7 +95,5 @@ class FriendsTestCase(unittest.TestCase):
             status=200,
         )
         n_reqs = 4
-        start = time.time()
         mutual_friends = get_mutual(target_uids=list(range(n_reqs * 100)))
-        end = time.time()
         self.assertEqual(common_friends * n_reqs, mutual_friends)
