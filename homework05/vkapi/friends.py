@@ -131,7 +131,7 @@ def get_mutual(
 
 
 if __name__ == "__main__":
-    #print(get_friends(274205023, count=10, offset=10, fields="bdate")) # type: ignore
+    # print(get_friends(274205023, count=10, offset=10, fields="bdate")) # type: ignore
     print(get_mutual(274205023, 289180780))
     print(get_mutual(274205023, target_uids=[133985865, 289180780, 145904017]))  # общие друзья
-    #print(get_friends(None, count=10, offset=10, fields="bdate")) # type: ignore
+    # print(get_friends(None, count=10, offset=10, fields="bdate")) # type: ignore
