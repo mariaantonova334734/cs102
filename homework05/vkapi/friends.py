@@ -4,9 +4,9 @@ import time
 import typing as tp
 
 from homework05.vkapi.config import VK_CONFIG
-from homework05.vkapi.session import Session
+from homework05.vkapi.session import Session1
 
-session = Session(VK_CONFIG["domain"])  # запуск сессии
+session = Session1(VK_CONFIG["domain"])  # запуск сессии
 # from session import session #config,
 # from vkapi.exceptions import APIError
 
