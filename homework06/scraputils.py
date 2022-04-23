@@ -2,18 +2,27 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def extract_news(parser):
+def extract_news(parser1: BeautifulSoup):
     """ Extract news from a given web page """
     news_list = []
 
-    # PUT YOUR CODE HERE
+    #print(parser.head.title.text)
+    all_things = parser1.find_all("tr", {"class": "athing"})
+
+    #find_ch = parser1.findChildren()
+    for a_thing in all_things:
+        find_athing = a_thing.find_all("td", {"class": "title"})
+
+        news_list.append(find_athing[1].a.text)
 
     return news_list
 
 
-def extract_next_page(parser):
+def extract_next_page(parser1: BeautifulSoup):
     """ Extract next page URL """
-    # PUT YOUR CODE HERE
+    link = parser1.select(".morelink")[0]["href"]
+    #print(str(link))
+    return str(link)
 
 
 def get_news(url, n_pages=1):
@@ -30,3 +39,6 @@ def get_news(url, n_pages=1):
         n_pages -= 1
     return news
 
+
+if __name__=="__main__":
+    print(get_news("https://news.ycombinator.com/newest", n_pages=3)) #выдает заголовки на 3-х страницах
