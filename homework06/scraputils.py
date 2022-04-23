@@ -4,16 +4,47 @@ from bs4 import BeautifulSoup
 
 def extract_news(parser1: BeautifulSoup):
     """ Extract news from a given web page """
-    news_list = []
+    news_list = [] #для title
+    title_list = []
+    url_list = []
+    comments_list = []
+    point_list =[]
+    author_list = []
+    #title url comments  points author
 
-    #print(parser.head.title.text)
+    subtext_line = parser1.select(".subtext")
+
+    # сбор для title_list
     all_things = parser1.find_all("tr", {"class": "athing"})
-
-    #find_ch = parser1.findChildren()
     for a_thing in all_things:
         find_athing = a_thing.find_all("td", {"class": "title"})
+        title_list.append(find_athing[1].a.text)
+        url_list.append(find_athing[1].a["href"])
 
-        news_list.append(find_athing[1].a.text)
+    print(url_list)
+    for index in range(len(subtext_line)):
+        points = subtext_line[index].select(".score")
+        if points == []:
+            points = 0
+        else:
+            points = int(points[0].text.split()[0])
+        point_list.append(points)
+
+        author = subtext_line[index].select(".hnuser")
+        if author == []:
+            author = "Anonymous"
+        else:
+            author = author[0].text
+        author_list.append(author)
+
+        comments = subtext_line[index].find_all("a")[4].text
+        if comments == "discuss":
+            comments_list.append(0)
+        else:
+            comments_list.append(int(comments.split()[0]))
+    print(comments_list)
+    ###TODO: запись в news_list
+
 
     return news_list
 
