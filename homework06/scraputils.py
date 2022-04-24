@@ -4,17 +4,20 @@ from bs4 import BeautifulSoup
 
 def extract_news(parser1: BeautifulSoup):
     """ Extract news from a given web page """
-    news_list = [] #для title
+
+    news_list = []
+
+    #создаем списки для записей в таблицу -  title url comments  points author
     title_list = []
     url_list = []
     comments_list = []
     point_list =[]
     author_list = []
-    #title url comments  points author
 
+    #там где subtext
     subtext_line = parser1.select(".subtext")
 
-    # сбор для title_list
+    # сбор для title_list, url_list
     all_things = parser1.find_all("tr", {"class": "athing"})
     for a_thing in all_things:
         find_athing = a_thing.find_all("td", {"class": "title"})
@@ -22,6 +25,8 @@ def extract_news(parser1: BeautifulSoup):
         url_list.append(find_athing[1].a["href"])
 
     print(url_list)
+
+    #сбор для point_list
     for index in range(len(subtext_line)):
         points = subtext_line[index].select(".score")
         if points == []:
@@ -30,6 +35,7 @@ def extract_news(parser1: BeautifulSoup):
             points = int(points[0].text.split()[0])
         point_list.append(points)
 
+       #сбор для author_list
         author = subtext_line[index].select(".hnuser")
         if author == []:
             author = "Anonymous"
@@ -37,15 +43,22 @@ def extract_news(parser1: BeautifulSoup):
             author = author[0].text
         author_list.append(author)
 
+        #сбор для author_list
         comments = subtext_line[index].find_all("a")[4].text
         if comments == "discuss":
             comments_list.append(0)
         else:
             comments_list.append(int(comments.split()[0]))
     print(comments_list)
-    ###TODO: запись в news_list
 
+    #запись в news_list
 
+    for ind in range(len(title_list)):
+        news_list.append([title_list[ind],
+                          author_list[ind],
+                          url_list[ind],
+                          comments_list[ind],
+                          point_list[ind]])
     return news_list
 
 

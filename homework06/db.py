@@ -5,8 +5,8 @@ from sqlalchemy.orm import sessionmaker
 
 
 Base = declarative_base()
-engine = create_engine("sqlite:///news.db")
-session = sessionmaker(bind=engine)
+engine = create_engine("sqlite:///news.db") #подключение к базе данных
+session = sessionmaker(bind=engine) #сессия работы с базой данных
 
 
 class News(Base):
