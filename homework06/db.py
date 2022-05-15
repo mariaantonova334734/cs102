@@ -2,12 +2,12 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-Base = declarative_base()
+Base = declarative_base() # type: ignore
 engine = create_engine("sqlite:///news.db")  # подключение к базе данных
 session = sessionmaker(bind=engine)  # сессия работы с базой данных
 
 
-class News(Base):
+class News(Base): # type: ignore
     __tablename__ = "news"
     id = Column(Integer, primary_key=True)
     title = Column(String)
