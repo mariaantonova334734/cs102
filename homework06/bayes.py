@@ -9,7 +9,7 @@ class NaiveBayesClassifier:
         self.d = 0
         self.words_number: tp.Dict[str, int] = defaultdict(int)
         self.classify_w: tp.Dict[tp.Tuple[str, str], int] = defaultdict(int)
-        self.class1: dict[str, float] = defaultdict(int) # type: ignore
+        self.class1: dict[str, float] = defaultdict(int)  # type: ignore
         self.a = a
 
     def fit(self, x: tp.List[str], y: tp.List[str]) -> None:
