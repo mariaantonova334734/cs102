@@ -19,7 +19,7 @@ deadline_dict = (
 def convert_date(date: str = "01/01/00"):
     """Конвертируем дату из строки в datetime"""
     try:
-        return datetime.strptime(date, "%d/%m/%y") # type: ignore
+        return datetime.strptime(date, "%d/%m/%y")  # type: ignore
     except ValueError:
         return False
 
