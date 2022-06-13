@@ -6,8 +6,7 @@
 # from datetime import datetime, timedelta
 # import validators # type: ignore
 
-bot = telebot.TeleBot("5479099574:AAFX9pkEcS7naTC-kJiF8WMaAXGcxWC8DbE") # type: ignore
-
+bot = telebot.TeleBot("5479099574:AAFX9pkEcS7naTC-kJiF8WMaAXGcxWC8DbE")  # type: ignore
 subject_dict = (
     {}
 )  # словарь для хранения полльзовательской информации из разных чатов, ключ = chat.id, а значение - выбранный предмет
