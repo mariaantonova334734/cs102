@@ -1,10 +1,10 @@
-import telebot # type: ignore
-import gspread # type: ignore
-import json
-import pandas as pd # type: ignore
-import re
-from datetime import datetime, timedelta
-import validators # type: ignore
+# import telebot # type: ignore
+# import gspread # type: ignore
+# import json
+# import pandas as pd # type: ignore
+# import re
+# from datetime import datetime, timedelta
+# import validators # type: ignore
 
 bot = telebot.TeleBot("5479099574:AAFX9pkEcS7naTC-kJiF8WMaAXGcxWC8DbE")
 
