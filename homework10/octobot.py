@@ -6,7 +6,7 @@
 # from datetime import datetime, timedelta
 # import validators # type: ignore
 
-bot = telebot.TeleBot("5479099574:AAFX9pkEcS7naTC-kJiF8WMaAXGcxWC8DbE")
+bot = telebot.TeleBot("5479099574:AAFX9pkEcS7naTC-kJiF8WMaAXGcxWC8DbE") # type: ignore
 
 subject_dict = (
     {}
@@ -20,7 +20,7 @@ deadline_dict = (
 def convert_date(date: str = "01/01/00"):
     """Конвертируем дату из строки в datetime"""
     try:
-        return datetime.strptime(date, "%d/%m/%y")
+        return datetime.strptime(date, "%d/%m/%y") # type: ignore
     except ValueError:
         return False
 
