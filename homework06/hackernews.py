@@ -15,7 +15,7 @@ def news_list():
 
 
 @route("/add_label/")
-def add_label():
+def add_label(): #получение интересно, возможно, неинтересно
     # PUT YOUR CODE HERE
     redirect("/news")
 
