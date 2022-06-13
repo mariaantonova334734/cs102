@@ -2,10 +2,10 @@ import json
 import re
 from datetime import datetime, timedelta
 
-import gspread
-import pandas as pd
-import telebot
-import validators
+import gspread # type: ignore
+import pandas as pd # type: ignore
+import telebot # type: ignore
+import validators # type: ignore
 
 bot = telebot.TeleBot("5479099574:AAFX9pkEcS7naTC-kJiF8WMaAXGcxWC8DbE")
 
@@ -29,7 +29,6 @@ def convert_date(date: str = "01/01/00"):
 def connect_table(message):
     """Подключаемся к Google-таблице"""
     url = message.text
-    # https://www.geeksforgeeks.org/pattern-matching-python-regex/
     sheet_id_regex = re.compile(r"/d/(.*)/edit#")  # регулярные выражение
     mo = sheet_id_regex.search(url)
     if mo is None:  # если неправильна введена ссылка на таблицу
